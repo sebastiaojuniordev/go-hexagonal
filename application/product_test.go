@@ -90,3 +90,9 @@ func TestProduct_GetPrice(t *testing.T) {
 	product.Price = 10
 	require.Equal(t, float64(10), product.Price)
 }
+
+func TestNewProduct(t *testing.T) {
+	product := application.NewProduct()
+	require.NotEmpty(t, product.ID)
+	require.Equal(t, application.DISABLED, product.Status)
+}
