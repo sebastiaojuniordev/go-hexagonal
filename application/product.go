@@ -20,6 +20,26 @@ type ProductInterface interface {
 	GetPrice() float64
 }
 
+type ProductServiceInterface interface {
+	Get(id string) (ProductInterface, error)
+	Create(name string, price float64) (ProductInterface, error)
+	Enable(product ProductInterface) (ProductInterface, error)
+	Disable(product ProductInterface) (ProductInterface, error)
+}
+
+type ProductReader interface {
+	Get(id string) (ProductInterface, error)
+}
+
+type ProductWriter interface {
+	Save(product ProductInterface) (ProductInterface, error)
+}
+
+type ProductPersistenceInterface interface {
+	ProductReader
+	ProductWriter
+}
+
 const (
 	DISABLED = "disabled"
 	ENABLED  = "enabled"
@@ -76,7 +96,7 @@ func (p *Product) Disable() error {
 	return errors.New("the price must be zero in order to have the product disabled")
 }
 
-func (p *Product) GetID() string {
+func (p *Product) GetId() string {
 	return p.ID
 }
 
